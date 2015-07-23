@@ -1,0 +1,18 @@
+body{
+	padding: 1px; margin: 15px;
+	background: #CCC;
+	font-family: "Liberation Serif", serif;
+	font-style: normal;
+	font-weight: normal;
+	text-indent: 0px;
+}
+
+.tooltip{
+	position: fixed; background-color: gray; -moz-border-radius: 5px;
+	color: white; text-align: center;
+}
+
+#tiptext{
+	position: fixed; color: black; cursor: help;
+	text-align: center;
+}

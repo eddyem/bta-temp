@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="koi8-r" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" onload="OnLoadEvent(evt)">
+<defs id="defs">
+	<path	style="fill:none;stroke:#000000;stroke-width:1px;"
+		d="M 100,335 l 300,0 0,-34 30,0 0,-24 10,-10 52,0 a 242,242 0 0 0 -484,0
+		l 52,0 10,10 0,24 30,0 0,34"
+		id="outside"/>
+	<path	style="fill:none;stroke:#000000;stroke-width:1px;"
+		d="M 18,267 a 232,242 0 0 1 464,0"
+		id="inside"/>
+	<!--path	style="fill:#aaaaff;stroke:#000000;stroke-width:2px;fill-opacity:0.5"
+		d="M 8,267 l -5,0 a 247,247 0 0 1 247,-247 l 0,5 a 242,242 0 0 0 -242,242"
+		id="visor"/-->
+	<!--path	style="fill:none;stroke:#000000;stroke-width:1px"
+		d="M 450,260 l 0,20 a 208,35 0 0 0 -60,-16 l 0,-20 a 208,35 0 0 1 60 16"
+		id="stoppos"/>
+	<path	d="M 394,258 a 208,35 0 0 1 60 16"
+		id="textpath"/>
+	<clipPath id="theclip">
+		<use xlink:href="#outside"/>
+ 	</clipPath-->
+ 	<clipPath id="domeclip">
+ 		<path d="M 18,107 a 232,242 0 0 1 464,0 l 10,0 a 242,242 0 0 0 -484,0 z"/>
+ 	</clipPath>
+ 	<clipPath id="innerclip">
+	<path	d="M 100,175 l 300,0 0,-34 30,0 0,-24 10,-10 42,0
+	a 232,242 0 0 0 -464,0 l 42,0 10,10 0,24 30,0 0,34"/>
+ 	</clipPath>	
+</defs>
+<g id="Main">
+<g id="Dome" x="0" y="0">
+	<use xlink:href="#outside"/>
+	<use xlink:href="#inside"/>
+	<!--use xlink:href="#visor"/-->
+	<!--use xlink:href="#stoppos"/>
+	<text font-size="9">
+		<textPath xlink:href="#textpath">
+		<tspan dy="-5">Посадочная</tspan>
+		<tspan dy="9" dx="-48">площадка</tspan>
+		</textPath>
+	</text-->
+</g>
+<!--<g id="Scene" x="0" y="0" clip-path="url(#theclip)"></g>-->
+<g id="Scene" x="0" y="0"></g>
+</g>
+<script type="text/ecmascript"><![CDATA[
+function OnLoadEvent(evt){
+	parent.initSVG(evt.target.ownerDocument, 335);
+}
+]]></script>
+</svg>
