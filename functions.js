@@ -3,7 +3,7 @@
  */
 var MaxTemp, MinTemp;
 const deg2rad = Math.PI / 180.0;
-var theScene, SScene, IScene, TScene, tScene; // весь рисунок, подкупольное, межкупольное, 
+var theScene, SScene, IScene, TScene, tScene; // весь рисунок, подкупольное, межкупольное,
 	// слой для кружочков от сенсоров (чувствительных к мыше), вспомогательный слой
 // угол phi в координатах датчиков - в плоскости рисунка
 // R, Z - в дециметрах
@@ -36,15 +36,16 @@ const Isen_num = [2, 10];
 const MDsen_pos = [ // датчики на подв. части купола (металл), коорд.: R
 	243, 239, 233, 229
 ];
-const MDsen_num = [0, 1, 3, 4]; 
+const MDsen_num = [0, 1, 3, 4];
 const ZAxisHeight = 88; // высота оси Z (зенитн. р.) от пола
+// tube6 doesn't work
 const Tsen_pos = [ // воздушные сенсоры на телескопе !!! Высоты - от оси Z !!!
-	[37,  90,-55], // 1
+	[ 0,   0,190], // 19
 	[37, -90,-55], // 2
 	[37,   0,-55], // 3
 	[31,  69,-33], // 4
 	[33,  69,-28], // 5
-	[34,-171,-10], // 6
+/*	[34,-171,-10], // 6*/
 	[ 4, -82, -8], // 7
 	[ 4, -82,  0], // 8
 	[35, 147, 40], // 9
@@ -57,13 +58,13 @@ const Tsen_pos = [ // воздушные сенсоры на телескопе !!! Высоты - от оси Z !!!
 	[ 0,   0,146], // 16
 	[40, -90,155], // 17
 	[10, 180,190], // 18
-	[ 0,   0,190], // 19
+	[37,  90,-55], // 1
 	[ 9, 180,201]  // 20
 ];
 var Tsen_sincos = new Array();
-const Tsen_num = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+const Tsen_num = [1,2,3,4,5/*,6*/,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 // типы датчиков:
-const Tsen_type = [	"a", "a", "a", "a", "m", "a", "a", "m", "a", "a",
+const Tsen_type = [	"a", "a", "a", "a", "m"/*, "a"*/, "a", "m", "a", "a",
 					"a", "m", "a", "a", "a", "a", "m", "m", "a", "a"];
 var DomeTemperatures = new Array(); // показания температур датчиков купола
 var DomeTempsUsed = new Array(); // 1 - показания датчика используются
@@ -199,7 +200,7 @@ function initSensors(){
 	}
 	l = Dsen_pos.length;
 	for(i=0; i<l; i++){
-		Dsen_sincos[i] = [	Math.sin(Dsen_pos[i]*deg2rad), 
+		Dsen_sincos[i] = [	Math.sin(Dsen_pos[i]*deg2rad),
 							Math.cos(Dsen_pos[i]*deg2rad)];
 		DSensors[i] = new Sensor(SScene, "a",0,0, Dsen_num[i], "d", "dome-moving"+i);
 	}
@@ -231,7 +232,7 @@ function Telescope(){
 	// координаты вершин в ЦСК, z относительно оси Z
 	this.points = new Array();
 	var linesz = 0;
-	function fillpts(step, r1,h1, r2, h2){ 
+	function fillpts(step, r1,h1, r2, h2){
 		var l = 720 / step, half = step / 2 * deg2rad, a45 = 45*deg2rad;
 		points = new Array(l);
 		for(var i = 0; i < l; i+=2){
@@ -295,7 +296,7 @@ function RotTel(){
 	for(var i = 0; i < this.points.length; i++)
 		show_part(this.points[i], this.lines);
 }
-	
+
 function Sensor(aParent, type, x, y, Num, prefix, id){
 	var outer = new Circle(aParent, 0, id);
 	var radius = (type == "m") ? 3 : 5;
@@ -351,11 +352,11 @@ function doRotate(evt){
 	var Xc = SVGDoc.width/2, Xabs = (xClick0-Xc)/R;
 	var Yc = SVGDoc.height/2, Yabs = (yClick0-Yc)/R;
 	var dir = (xClick0-X)>0?1:-1;
-	var Xabs1 = (X-Xc)/R, Yabs1 = (Y-Yc)/R; 
+	var Xabs1 = (X-Xc)/R, Yabs1 = (Y-Yc)/R;
 	if(Xabs>1) Xabs=1; else if(Xabs<-1) Xabs=-1;
 	if(Yabs>1) Yabs=1; else if(Yabs<-1) Yabs=-1;
 	if(Xabs1>1) Xabs1=1; else if(Xabs1<-1) Xabs1=-1;
-	if(Yabs1>1) Yabs1=1; else if(Yabs1<-1) Yabs1=-1;	
+	if(Yabs1>1) Yabs1=1; else if(Yabs1<-1) Yabs1=-1;
 	if(olddir == 0) olddir = dir;
 	else if(olddir != dir){olddir = dir; sign = 0;}
 	if((Y-yClick0)>0) dir *= -1; // тянут за "заднюю часть"
@@ -647,7 +648,7 @@ function parseTemp(req){
 
 function fillTemp(sObj, sArray){
 	var n, d, t, pos;
-	if(sObj == "dome") pos=6; 
+	if(sObj == "dome") pos=6;
 	else pos=7;
 	n = Number(parseInt(sArray[0].substr(pos))); // номер датчика
 	t = Number(parseFloat(sArray[3]).toFixed(1));
@@ -666,7 +667,7 @@ function sendrequest(CGI_PATH, req_STR, fn_OK){
 	var request = new XMLHttpRequest();
 	request.open("POST", CGI_PATH, true);
 	request.setRequestHeader("Accept-Charset", "koi8-r");
-	request.overrideMimeType("multipart/form-data;"); 
+	request.overrideMimeType("multipart/form-data;");
 	request.onreadystatechange=function(){
 		if(request.readyState == 4){
 			if(request.status == 200){
